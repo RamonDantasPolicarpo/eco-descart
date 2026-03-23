@@ -1,2 +1,2 @@
 # EcoDescart
-## Sistema para auxílio no descarte conciente de resíduos, utlizando IA para identificar o tipo de resíduo e fornecer informações sobre o descarte correto, e indicar pontos de coleta próximos.
+## Sistema para auxílio no descarte conciente de resíduos, utlizando IA para identificar o tipo de resíduo, fornecer informações sobre o descarte correto, e indicar pontos de coleta próximos.
