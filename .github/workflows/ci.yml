@@ -21,6 +21,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Dar permissão de execução ao mvnw
+        run: chmod +x mvnw
+
       - name: Executar Lint e Testes com Maven
         # O comando 'verify' executa o checkstyle:check e os testes unitários
         run: ./mvnw -B verify
