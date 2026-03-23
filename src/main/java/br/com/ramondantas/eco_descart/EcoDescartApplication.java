@@ -23,6 +23,9 @@ public class EcoDescartApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
+		if (args.length > 0 && args[0].equals("test")) {
+			return;
+		}
 		Scanner sc = new Scanner(System.in);
 		System.out.println("--== EcoDescart: Descarte Inteligente ==--");
 
