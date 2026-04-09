@@ -1,6 +1,7 @@
 package br.com.ramondantas.eco_descart;
 
 import br.com.ramondantas.eco_descart.dto.ResiduoDTO;
+import br.com.ramondantas.eco_descart.exception.AiIntegrationException;
 import br.com.ramondantas.eco_descart.service.IdentificadorResiduoService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -35,17 +36,23 @@ public class EcoDescartApplication implements CommandLineRunner {
 
 			if (descricao.equalsIgnoreCase("sair")) break;
 
-			// Chama o serviço e recebe o DTO
-			ResiduoDTO resultado = service.identificarResiduo(descricao);
+			// Chama o service e recebe o DTO
+			try {
+				ResiduoDTO resultado = service.identificarResiduo(descricao);
 
-			System.out.println("\n>>> RESULTADO DA ANÁLISE <<<");
-			System.out.println("Tipo: " + resultado.tipo());
-			System.out.println("Reciclável: " + (resultado.isReciclavel() ? "SIM" : "NÃO"));
-			System.out.println("Orgânico: " + (resultado.isOrganico() ? "SIM" : "NÃO"));
-			System.out.println("Especial: " + (resultado.isEspecial() ? "SIM" : "NÃO"));
-			System.out.println("Instrução: " + resultado.instDescarte());
-			if (!resultado.pontosSugeridos().isEmpty()) {
-				System.out.println("Pontos de Coleta: " + resultado.pontosSugeridos());
+				System.out.println("\n>>> RESULTADO DA ANÁLISE <<<");
+				System.out.println("Tipo: " + resultado.tipo());
+				System.out.println("Reciclável: " + (resultado.isReciclavel() ? "SIM" : "NÃO"));
+				System.out.println("Orgânico: " + (resultado.isOrganico() ? "SIM" : "NÃO"));
+				System.out.println("Especial: " + (resultado.isEspecial() ? "SIM" : "NÃO"));
+				System.out.println("Instrução: " + resultado.instDescarte());
+				if (!resultado.pontosSugeridos().isEmpty()) {
+					System.out.println("Pontos de Coleta: " + resultado.pontosSugeridos());
+				}
+			} catch (AiIntegrationException e) {
+				System.out.println("\n[AVISO] O serviço de análise inteligente está indisponível no momento.");
+				System.out.println("Detalhe: " + e.getMessage());
+				System.out.println("Por favor, aguarde alguns instantes e tente novamente.");
 			}
 		}
 

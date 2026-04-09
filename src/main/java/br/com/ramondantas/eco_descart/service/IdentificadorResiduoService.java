@@ -1,53 +1,56 @@
 package br.com.ramondantas.eco_descart.service;
 
 import br.com.ramondantas.eco_descart.dto.ResiduoDTO;
+import br.com.ramondantas.eco_descart.exception.AiIntegrationException;
 import br.com.ramondantas.eco_descart.model.Residuo;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class IdentificadorResiduoService {
 
-    public ResiduoDTO identificarResiduo(String descricaoInput) {
+    private final ChatClient chatClient;
 
-        // Implementar a lógica de integração com a API do Gemini para identificar
-        // o tipo de residuo e retornar um objeto válido.
-
-        // Por enquanto, vou simular isso.
-        Residuo residuo = mockProcessamentoIA(descricaoInput);
-
-        return new ResiduoDTO(
-                residuo.getTipo(),
-                residuo.getDescricao(),
-                residuo.getInstDescarte(),
-                residuo.isReciclavel(),
-                residuo.isOrganico(),
-                residuo.isEspecial(),
-                residuo.getPontosColeta()
-        );
+    public IdentificadorResiduoService(ChatClient.Builder chatClientBuilder) {
+        this.chatClient = chatClientBuilder.build();
     }
 
-    private Residuo mockProcessamentoIA(String Input) {
-        String query = Input.toLowerCase();
+    public ResiduoDTO identificarResiduo(String descricaoInput) {
 
-        if (query.contains("pizza")) {
-            return new Residuo("Papelão", "Caixa de pizza usada", false, true, false,
-                    "Reciclagem convencional",
-                    List.of("Ponto de coleta A", "Ponto de coleta B"));
-        } else if (query.contains("garrafa") && query.contains("plastico")) {
-            return new Residuo("Plástico", "Garrafa PET de refrigerante", false, true, false,
-                    "Reciclagem convencional",
-                    List.of("Ponto de coleta C", "Ponto de coleta D"));
-        } else if (query.contains("bateria")) {
-            return new Residuo("Bateria", "Bateria de celular usada", false, false, true,
-                    "Ponto de coleta especializado",
-                    List.of("Ponto de coleta E"));
-        } else {
-            return new Residuo("Desconecido", "Descrição genérica do resíduo", false, false, false,
-                    "Verificar local de descarte adequado",
-                    List.of());
+        // Prompt detalhando a tarefa da IA
+        String prompt = """
+                Você é um especialista ambiental em gestão de resíduos.
+                Analise o seguinte item relatado por um usuário para descarte: "%s"
+                
+                Preencha os dados do resíduo identificando:
+                - O tipo (ex: Plástico, Eletrônico, Papel, etc)
+                - Uma breve descrição do objeto
+                - Se é orgânico (true/false)
+                - Se é reciclável (true/false)
+                - Se é especial (true/false). ATENÇÃO: Classifique como true (Especial/Perigoso)
+                - Instruções claras e diretas de como preparar para o descarte
+                - Uma lista contendo o nome de 2 pontos de coleta genéricos (pois o mapa real será integrado futuramente).
+                
+                """.formatted(descricaoInput);
 
+        // Fazendo a chamada API do Gemini
+        try {
+            Residuo residuo = chatClient.prompt()
+                    .user(prompt)
+                    .call()
+                    .entity(Residuo.class);
+
+            return new ResiduoDTO(
+                    residuo.getTipo(),
+                    residuo.getDescricao(),
+                    residuo.getInstDescarte(),
+                    residuo.isReciclavel(),
+                    residuo.isOrganico(),
+                    residuo.isEspecial(),
+                    residuo.getPontosColeta()
+            );
+        } catch (Exception e) {
+        throw new AiIntegrationException("Erro ao integrar com provedor de AI: ", e);
         }
     }
 
