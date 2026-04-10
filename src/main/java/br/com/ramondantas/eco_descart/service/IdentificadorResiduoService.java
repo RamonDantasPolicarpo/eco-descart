@@ -50,7 +50,7 @@ public class IdentificadorResiduoService {
                     residuo.getPontosColeta()
             );
         } catch (Exception e) {
-        throw new AiIntegrationException("Erro ao integrar com provedor de AI: ", e);
+        throw new AiIntegrationException("Erro ao integrar com provedor de AI. ", e);
         }
     }
 

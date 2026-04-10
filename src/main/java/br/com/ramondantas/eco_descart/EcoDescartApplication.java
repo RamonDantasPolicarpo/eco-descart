@@ -36,9 +36,31 @@ public class EcoDescartApplication implements CommandLineRunner {
 
 			if (descricao.equalsIgnoreCase("sair")) break;
 
+			// Animação para não parecer que o sistema crachou
+			Thread spinner = new Thread(() -> {
+				String[] anim = {"|", "/", "-", "\\"};
+				int x = 0;
+				try {
+					while (!Thread.currentThread().isInterrupted()) {
+						System.out.print("\r[IA] Analisando o resíduo... " + anim[x++ % anim.length]);
+						Thread.sleep(200); // Velocidade do giro
+					}
+				} catch (InterruptedException e) {
+					// spinner.interrupt() para parar a animação
+				}
+				// Limpa a linha antes de lancar o resultado
+				System.out.print("\r                                         \r");
+			});
+
+			// Inicia a animação
+			spinner.start();
+
 			// Chama o service e recebe o DTO
 			try {
 				ResiduoDTO resultado = service.identificarResiduo(descricao);
+
+				spinner.interrupt();
+				spinner.join(); // so pra garantir que vai limpar a linha antes da resposta
 
 				System.out.println("\n>>> RESULTADO DA ANÁLISE <<<");
 				System.out.println("Tipo: " + resultado.tipo());
@@ -50,11 +72,17 @@ public class EcoDescartApplication implements CommandLineRunner {
 					System.out.println("Pontos de Coleta: " + resultado.pontosSugeridos() + "\n");
 				}
 			} catch (AiIntegrationException e) {
+
+				spinner.interrupt();
+				try { spinner.join(); } catch (InterruptedException ignored) {}
+
 				System.out.println("\n[AVISO] O serviço de análise inteligente está indisponível no momento.");
 				System.out.println("Detalhe: " + e.getMessage());
-				System.out.println("Por favor, aguarde alguns instantes e tente novamente.");
-			}
-		}
+				System.out.println("Por favor, aguarde alguns instantes e tente novamente. \n");
+			} catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
 		System.out.println("Obrigado por usar o EcoDescart! Juntos, podemos fazer a diferença para o meio ambiente.");
 		System.exit(0);
