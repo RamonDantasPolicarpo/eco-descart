@@ -14,7 +14,7 @@ O descarte incorreto de resíduos sólidos é um dos grandes causadores de polui
 O **EcoDescart** é uma aplicação de linha de comando (CLI) que utiliza a API do Google Gemini (Spring AI) para atuar como um especialista ambiental. O usuário descreve o lixo que deseja jogar fora e o sistema analisa, classifica e devolve instruções precisas de segurança, embalagem e os pontos de coleta mais adequados.
 
 ## 🎯 Público-Alvo
-Cidadãos comuns, donas de casa, estudantes e pequenos empreendedores que buscam ter atitudes mais sustentáveis, mas esbarram na falta de informação rápida e clara sobre as regras de descarte e reciclagem.
+Cidadãos comuns, e pequenos empreendedores que buscam ter atitudes mais sustentáveis, mas esbarram na falta de informação rápida e clara sobre as regras de descarte e reciclagem.
 
 ## ✨ Funcionalidades Principais
 * **Identificação Inteligente:** Análise de texto natural do usuário via IA.
@@ -59,18 +59,7 @@ Inicie a aplicação executando o comando abaixo:
 ## 💻 Exemplo de Uso
 Após iniciar, o terminal exibirá o prompt do sistema:
 
---== EcoDescart: Descarte Inteligente ==--  
-Descreva o resíduo (ou 'sair'):  
-
-Agulhas de acupuntura usadas
-
-RESULTADO DA ANÁLISE  
-Tipo: Resíduo de Saúde Perfurocortante  
-Reciclável: NÃO  
-Orgânico: NÃO  
-Especial: SIM  
-Instrução: Descarte imediatamente após o uso em um coletor rígido e resistente à perfuração. Nunca descarte no lixo comum ou reciclável.  
-Pontos de Coleta: [Unidade Básica de Saúde (UBS), Farmácias]  
+<img src="./src/main/resources/static/gif_sistema_funcionando.gif">
 
 ---
 
