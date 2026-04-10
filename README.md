@@ -59,17 +59,18 @@ Inicie a aplicação executando o comando abaixo:
 ## 💻 Exemplo de Uso
 Após iniciar, o terminal exibirá o prompt do sistema:
 
---== EcoDescart: Descarte Inteligente ==--
-Descreva o resíduo (ou 'sair'):
+--== EcoDescart: Descarte Inteligente ==--  
+Descreva o resíduo (ou 'sair'):  
+
 Agulhas de acupuntura usadas
 
 RESULTADO DA ANÁLISE  
-Tipo: Resíduo de Saúde Perfurocortante
-Reciclável: NÃO
-Orgânico: NÃO
-Especial: SIM
-Instrução: Descarte imediatamente após o uso em um coletor rígido e resistente à perfuração. Nunca descarte no lixo comum ou reciclável.
-Pontos de Coleta: [Unidade Básica de Saúde (UBS), Farmácias]
+Tipo: Resíduo de Saúde Perfurocortante  
+Reciclável: NÃO  
+Orgânico: NÃO  
+Especial: SIM  
+Instrução: Descarte imediatamente após o uso em um coletor rígido e resistente à perfuração. Nunca descarte no lixo comum ou reciclável.  
+Pontos de Coleta: [Unidade Básica de Saúde (UBS), Farmácias]  
 
 ---
 
@@ -84,7 +85,7 @@ O projeto utiliza o Checkstyle para garantir a padronização e a qualidade do c
 ---
 
 ## 📌 Versão Atual
-**v1.0.0** - Entrega Inicial (Bootcamp II)
+**v1.0.0**
 
 ## 👤 Autor
 **Ramon Dantas Policarpo**
