@@ -28,10 +28,10 @@ public class EcoDescartApplication implements CommandLineRunner {
 			return;
 		}
 		Scanner sc = new Scanner(System.in);
-		System.out.println("--== EcoDescart: Descarte Inteligente ==--");
+		System.out.println("\n--== EcoDescart: Descarte Inteligente ==--");
 
 		while (true) {
-			System.out.println("\nDescreva o resíduo (ou 'sair'):");
+			System.out.println("==== Descreva o resíduo (ou 'sair'):  ====");
 			String descricao = sc.nextLine();
 
 			if (descricao.equalsIgnoreCase("sair")) break;
@@ -47,7 +47,7 @@ public class EcoDescartApplication implements CommandLineRunner {
 				System.out.println("Especial: " + (resultado.isEspecial() ? "SIM" : "NÃO"));
 				System.out.println("Instrução: " + resultado.instDescarte());
 				if (!resultado.pontosSugeridos().isEmpty()) {
-					System.out.println("Pontos de Coleta: " + resultado.pontosSugeridos());
+					System.out.println("Pontos de Coleta: " + resultado.pontosSugeridos() + "\n");
 				}
 			} catch (AiIntegrationException e) {
 				System.out.println("\n[AVISO] O serviço de análise inteligente está indisponível no momento.");
