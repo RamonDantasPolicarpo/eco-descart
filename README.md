@@ -42,19 +42,22 @@ Cidadãos comuns, e pequenos empreendedores que buscam ter atitudes mais sustent
 
 ### Instalação
 1. Clone este repositório:
-   git clone https://github.com/ramondantaspolicarpo/eco-descart.git
+   git clone https://github.com/RamonDantasPolicarpo/eco-descart.git
 2. Acesse a pasta do projeto:
    cd eco-descart
 3. Configure a sua chave de API exportando a variável de ambiente:  
 Você pode obter uma chave gratuíta do Google AI Studio seguindo as instruções em: https://aistudio.google.com/api-keys. Depois de obter a chave, configure a variável de ambiente `GEMINI_API_KEY` com o valor da sua chave:
     * **Linux/Mac:** `export GEMINI_API_KEY="sua-chave-aqui"`
     * **Windows (CMD):** `set GEMINI_API_KEY="sua-chave-aqui"`
-    * **Windows (PowerShell):** `$env:GEMINI_API_KEY="sua-chave-aqui"`  
-
+    * **Windows (PowerShell):** `$env:GEMINI_API_KEY="sua-chave-aqui"`
 
 ### Execução
 Inicie a aplicação executando o comando abaixo:
 ./mvnw spring-boot:run
+
+### Execução via Docker
+1. Caso tenha o Docker intalado em sua máquina, basta rodar o seguinte comando no terminal da sua máquina, lembrando de substituir `sua-chave-aqui` pela chave de API que você obteve:
+   * **Docker:** `docker run -it -e GEMINI_API_KEY="sua-chave-aqui" ramondantasdev/ecodescart-app`
 
 ---
 
