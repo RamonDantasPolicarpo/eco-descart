@@ -45,10 +45,12 @@ Cidadãos comuns, e pequenos empreendedores que buscam ter atitudes mais sustent
    git clone https://github.com/ramondantaspolicarpo/eco-descart.git
 2. Acesse a pasta do projeto:
    cd eco-descart
-3. Configure a sua chave de API exportando a variável de ambiente:
+3. Configure a sua chave de API exportando a variável de ambiente:  
+Você pode obter uma chave gratuíta do Google AI Studio seguindo as instruções em: https://aistudio.google.com/api-keys. Depois de obter a chave, configure a variável de ambiente `GEMINI_API_KEY` com o valor da sua chave:
     * **Linux/Mac:** `export GEMINI_API_KEY="sua-chave-aqui"`
     * **Windows (CMD):** `set GEMINI_API_KEY="sua-chave-aqui"`
-    * **Windows (PowerShell):** `$env:GEMINI_API_KEY="sua-chave-aqui"`
+    * **Windows (PowerShell):** `$env:GEMINI_API_KEY="sua-chave-aqui"`  
+
 
 ### Execução
 Inicie a aplicação executando o comando abaixo:
@@ -59,7 +61,7 @@ Inicie a aplicação executando o comando abaixo:
 ## 💻 Exemplo de Uso
 Após iniciar, o terminal exibirá o prompt do sistema:
 
-<img src="./src/main/resources/static/gif_sistema_funcionando.gif">
+<img src="./src/main/resources/static/assets/gif_funcionamento_sistema.gif">
 
 ---
 

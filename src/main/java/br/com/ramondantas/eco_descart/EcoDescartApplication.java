@@ -38,15 +38,15 @@ public class EcoDescartApplication implements CommandLineRunner {
 
 			// Animação para não parecer que o sistema crachou
 			Thread spinner = new Thread(() -> {
-				String[] anim = {"|", "/", "-", "\\"};
+				String[] anim = {"[■□□□□□]", "[□■□□□□]", "[□□■□□□]", "[□□□■□□]", "[□□□□■□]", "[□□□□□■]", "[□□□□■□]", "[□□□■□□]", "[□□■□□□]", "[□■□□□□]"};
 				int x = 0;
 				try {
 					while (!Thread.currentThread().isInterrupted()) {
 						System.out.print("\r[IA] Analisando o resíduo... " + anim[x++ % anim.length]);
-						Thread.sleep(200); // Velocidade do giro
+						Thread.sleep(250); // Velocidade do giro
 					}
 				} catch (InterruptedException e) {
-					// spinner.interrupt() para parar a animação
+
 				}
 				// Limpa a linha antes de lancar o resultado
 				System.out.print("\r                                         \r");
