@@ -38,7 +38,8 @@ Cidadãos comuns, e pequenos empreendedores que buscam ter atitudes mais sustent
 ### Pré-requisitos
 * Java 21 instalado
 * Maven instalado (ou use o `mvnw` incluso no projeto)
-* Uma chave de API válida do Google AI Studio.
+* Uma chave de API válida do Google AI Studio.  
+  Você pode obter uma chave gratuíta do Google AI Studio em: https://aistudio.google.com/api-keys.
 
 ### Instalação
 1. Clone este repositório:
@@ -46,7 +47,7 @@ Cidadãos comuns, e pequenos empreendedores que buscam ter atitudes mais sustent
 2. Acesse a pasta do projeto:
    cd eco-descart
 3. Configure a sua chave de API exportando a variável de ambiente:  
-Você pode obter uma chave gratuíta do Google AI Studio seguindo as instruções em: https://aistudio.google.com/api-keys. Depois de obter a chave, configure a variável de ambiente `GEMINI_API_KEY` com o valor da sua chave:
+Depois de obter a chave, configure a variável de ambiente `GEMINI_API_KEY` com o valor da sua chave:
     * **Linux/Mac:**
       ``` bash
       export GEMINI_API_KEY="sua-chave-aqui"
