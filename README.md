@@ -62,8 +62,9 @@ Você pode obter uma chave gratuíta do Google AI Studio seguindo as instruçõe
 
 ### Execução
 Inicie a aplicação executando o comando abaixo:
+``` PowerShell
 ./mvnw spring-boot:run
-
+```
 ### Execução via Docker
 1. Caso tenha o Docker intalado em sua máquina, basta rodar o seguinte comando no terminal da sua máquina, lembrando de substituir `sua-chave-aqui` pela chave de API que você obteve:
    * **Docker:**
