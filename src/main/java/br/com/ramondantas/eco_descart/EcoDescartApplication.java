@@ -58,16 +58,14 @@ public class EcoDescartApplication implements CommandLineRunner {
             return;
         }
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n--== EcoDescart: Descarte Inteligente ==--");
+        System.out.println("\n--== EcoDescart: Descarte Inteligente ==--\n");
 
-        // Captura do CEP para a API do ViaCEP
-        System.out.print("Para melhorarmos as sugestões, informe seu CEP (apenas números): ");
+        System.out.print("Para melhorarmos as sugestões, informe seu CEP (apenas números): \n");
         String cep = sc.nextLine();
 
-        System.out.print("Buscando localização... ");
+        System.out.print("Buscando localização... \n");
         EnderecoDTO endereco = viaCepService.getEndereco(cep);
-
-        // Montagem estruturada do endereço de Brasília ou região
+        
         StringBuilder locBuilder = new StringBuilder();
         if (endereco.logradouro() != null && !endereco.logradouro().isBlank()) {
             locBuilder.append(endereco.logradouro()).append(", ");
