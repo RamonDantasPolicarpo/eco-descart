@@ -15,12 +15,14 @@ public class IdentificadorResiduoService {
         this.chatClient = chatClientBuilder.build();
     }
 
-    public ResiduoDTO identificarResiduo(String descricaoInput) {
+    public ResiduoDTO identificarResiduo(String descricaoInput, String localizacao) {
 
         // Prompt detalhando a tarefa da IA
         String prompt = """
                 Você é um especialista ambiental em gestão de resíduos.
                 Analise o seguinte item relatado por um usuário para descarte: "%s"
+                
+                O usuário está localizado na seguinte região: %s.
                 
                 Preencha os dados do resíduo identificando:
                 - O tipo (ex: Plástico, Eletrônico, Papel, etc)
@@ -29,9 +31,9 @@ public class IdentificadorResiduoService {
                 - Se é reciclável (true/false)
                 - Se é especial (true/false). ATENÇÃO: Classifique como true (Especial/Perigoso)
                 - Instruções claras e diretas de como preparar para o descarte
-                - Uma lista contendo o nome de 2 pontos de coleta genéricos (pois o mapa real será integrado futuramente).
+                - Uma lista contendo o nome de 2 pontos de coleta REAIS ou adequados para essa região.
                 
-                """.formatted(descricaoInput);
+                """.formatted(descricaoInput, localizacao);
 
         // Fazendo a chamada API do Gemini
         try {
@@ -50,7 +52,7 @@ public class IdentificadorResiduoService {
                     residuo.getPontosColeta()
             );
         } catch (Exception e) {
-        throw new AiIntegrationException("Erro ao integrar com provedor de AI. ", e);
+            throw new AiIntegrationException("Erro ao integrar com provedor de AI. ", e);
         }
     }
 
