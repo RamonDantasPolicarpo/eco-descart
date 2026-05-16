@@ -39,7 +39,18 @@ public class EcoDescartApplication implements CommandLineRunner {
 
         System.out.print("Buscando localização... ");
         EnderecoDTO endereco = viaCepService.getEndereco(cep);
-        String localizacaoUsuario = endereco.localidade() + " - " + endereco.uf();
+        StringBuilder locBuilder = new StringBuilder();
+
+        if (endereco.logradouro() != null && !endereco.logradouro().isBlank()) {
+            locBuilder.append(endereco.logradouro()).append(", ");
+        }
+        if (endereco.bairro() != null && !endereco.bairro().isBlank()) {
+            locBuilder.append(endereco.bairro()).append(" - ");
+        }
+        locBuilder.append(endereco.localidade()).append(" - ").append(endereco.uf());
+
+        String localizacaoUsuario = locBuilder.toString();
+
         System.out.println("Localização definida: " + localizacaoUsuario + "\n");
 
         while (true) {
