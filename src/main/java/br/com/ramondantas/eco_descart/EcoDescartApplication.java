@@ -23,6 +23,32 @@ public class EcoDescartApplication implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Tenta buscar a chave das variáveis de ambiente do sistema operacional primeiro
+        String apiKey = System.getenv("GEMINI_API_KEY");
+        if (apiKey == null || apiKey.isBlank()) {
+            apiKey = System.getProperty("GEMINI_API_KEY");
+        }
+
+        // Se não encontrar em lugar nenhum, solicita diretamente no terminal ANTES do Spring Boot subir
+        if (apiKey == null || apiKey.isBlank()) {
+            System.out.println("====================================================");
+            System.out.println("         CONFIGURAÇÃO INICIAL DO ECODESCART         ");
+            System.out.println("====================================================");
+            System.out.print("Por favor, digite ou cole sua GEMINI_API_KEY: ");
+            apiKey = scanner.nextLine().trim();
+
+            while (apiKey.isBlank()) {
+                System.out.print("A chave não pode ser vazia. Digite novamente: ");
+                apiKey = scanner.nextLine().trim();
+            }
+
+            // Injeta dinamicamente a chave informada nas propriedades de sistema
+            System.setProperty("GEMINI_API_KEY", apiKey);
+            System.out.println("\nChave configurada com sucesso! Inicializando o sistema...\n");
+        }
+
         SpringApplication.run(EcoDescartApplication.class, args);
     }
 
@@ -32,15 +58,17 @@ public class EcoDescartApplication implements CommandLineRunner {
             return;
         }
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n--== EcoDescart: Descarte Inteligente ==--\n");
+        System.out.println("\n--== EcoDescart: Descarte Inteligente ==--");
 
-        System.out.print("Para melhorarmos as sugestões, informe seu CEP (apenas números): \n");
+        // Captura do CEP para a API do ViaCEP
+        System.out.print("Para melhorarmos as sugestões, informe seu CEP (apenas números): ");
         String cep = sc.nextLine();
 
-        System.out.print("Buscando localização... \n");
+        System.out.print("Buscando localização... ");
         EnderecoDTO endereco = viaCepService.getEndereco(cep);
-        StringBuilder locBuilder = new StringBuilder();
 
+        // Montagem estruturada do endereço de Brasília ou região
+        StringBuilder locBuilder = new StringBuilder();
         if (endereco.logradouro() != null && !endereco.logradouro().isBlank()) {
             locBuilder.append(endereco.logradouro()).append(", ");
         }
@@ -50,7 +78,6 @@ public class EcoDescartApplication implements CommandLineRunner {
         locBuilder.append(endereco.localidade()).append(" - ").append(endereco.uf());
 
         String localizacaoUsuario = locBuilder.toString();
-
         System.out.println("Localização definida: " + localizacaoUsuario + "\n");
 
         while (true) {
@@ -59,31 +86,26 @@ public class EcoDescartApplication implements CommandLineRunner {
 
             if (descricao.equalsIgnoreCase("sair")) break;
 
-            // Animação para não parecer que o sistema crachou
             Thread spinner = new Thread(() -> {
                 String[] anim = {"[■□□□□□]", "[□■□□□□]", "[□□■□□□]", "[□□□■□□]", "[□□□□■□]", "[□□□□□■]", "[□□□□■□]", "[□□□■□□]", "[□□■□□□]", "[□■□□□□]"};
                 int x = 0;
                 try {
                     while (!Thread.currentThread().isInterrupted()) {
                         System.out.print("\r[IA] Analisando o resíduo... " + anim[x++ % anim.length]);
-                        Thread.sleep(250); // Velocidade do giro
+                        Thread.sleep(250);
                     }
                 } catch (InterruptedException e) {
-
                 }
-                // Limpa a linha antes de lancar o resultado
                 System.out.print("\r                                         \r");
             });
 
-            // Inicia a animação
             spinner.start();
 
-            // Chama o service e recebe o DTO
             try {
                 ResiduoDTO resultado = service.identificarResiduo(descricao, localizacaoUsuario);
 
                 spinner.interrupt();
-                spinner.join(); // so pra garantir que vai limpar a linha antes da resposta
+                spinner.join();
 
                 System.out.println("\n>>> RESULTADO DA ANÁLISE <<<");
                 System.out.println("Tipo: " + resultado.tipo());
@@ -95,7 +117,6 @@ public class EcoDescartApplication implements CommandLineRunner {
                     System.out.println("Pontos de Coleta: " + resultado.pontosSugeridos() + "\n");
                 }
             } catch (AiIntegrationException e) {
-
                 spinner.interrupt();
                 try {
                     spinner.join();
@@ -112,6 +133,5 @@ public class EcoDescartApplication implements CommandLineRunner {
 
         System.out.println("Obrigado por usar o EcoDescart! Juntos, podemos fazer a diferença para o meio ambiente.");
         System.exit(0);
-
     }
 }
