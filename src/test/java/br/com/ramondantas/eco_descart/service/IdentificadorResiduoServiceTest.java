@@ -51,12 +51,14 @@ public class IdentificadorResiduoServiceTest {
                 List.of("Lixeira Azul", "Ecoponto")
         );
 
-        // Ensinado o Mockito a devolver o mockResiduo quando o metodo entity() for chamado
         when(chatClient.prompt().user(anyString()).call().entity(Residuo.class)).thenReturn(mockResiduo);
 
         // 2 - Executando o metodo real do servico
         String input = "Uma caixa de pizza suja";
-        ResiduoDTO resultado = service.identificarResiduo(input);
+        String localizacaoMock = "Brasília - DF"; // <- Criamos uma localização falsa para o teste
+
+        // Passamos os DOIS parâmetros que o método agora exige
+        ResiduoDTO resultado = service.identificarResiduo(input, localizacaoMock);
 
         // 3 - Verificando se o DTO mapeou tudo certo
         assertEquals("Papelão", resultado.tipo());
