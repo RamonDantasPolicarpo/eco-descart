@@ -32,12 +32,12 @@ public class EcoDescartApplication implements CommandLineRunner {
             return;
         }
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n--== EcoDescart: Descarte Inteligente ==--");
+        System.out.println("\n--== EcoDescart: Descarte Inteligente ==--\n");
 
-        System.out.print("Para melhorarmos as sugestões, informe seu CEP (apenas números): ");
+        System.out.print("Para melhorarmos as sugestões, informe seu CEP (apenas números): \n");
         String cep = sc.nextLine();
 
-        System.out.print("Buscando localização... ");
+        System.out.print("Buscando localização... \n");
         EnderecoDTO endereco = viaCepService.getEndereco(cep);
         StringBuilder locBuilder = new StringBuilder();
 

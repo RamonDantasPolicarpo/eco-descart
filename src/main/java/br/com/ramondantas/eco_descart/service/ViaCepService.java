@@ -23,7 +23,7 @@ public class ViaCepService {
                     .retrieve()
                     .body(EnderecoDTO.class);
         } catch (Exception e) {
-            return new EnderecoDTO("sua região", "");
+            return new EnderecoDTO("", "", "", "");
         }
     }
 }
