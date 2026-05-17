@@ -65,7 +65,7 @@ public class EcoDescartApplication implements CommandLineRunner {
 
         System.out.print("Buscando localização... \n");
         EnderecoDTO endereco = viaCepService.getEndereco(cep);
-        
+
         StringBuilder locBuilder = new StringBuilder();
         if (endereco.logradouro() != null && !endereco.logradouro().isBlank()) {
             locBuilder.append(endereco.logradouro()).append(", ");
@@ -121,9 +121,12 @@ public class EcoDescartApplication implements CommandLineRunner {
                 } catch (InterruptedException ignored) {
                 }
 
-                System.out.println("\n[AVISO] O serviço de análise inteligente está indisponível no momento.");
-                System.out.println("Detalhe: " + e.getMessage());
-                System.out.println("Por favor, aguarde alguns instantes e tente novamente. \n");
+                System.out.println("\n[ERRO] Problema ao conectar com o provedor de IA.");
+                System.out.println("Sua chave de API pode estar inválida ou o serviço está fora do ar.");
+                System.out.println("Por favor, reinicie a aplicação e verifique sua GEMINI_API_KEY.\n");
+
+                // Quebra o loop para encerrar o programa, já que a chave tá errada
+                break;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
